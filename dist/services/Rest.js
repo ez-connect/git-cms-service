@@ -35,10 +35,11 @@ class Rest extends EventEmitter {
         return res.data;
     }
     getCode(err) {
+        var _a;
         if (err.code) {
             return Number.parseInt(err.code, 10);
         }
-        if (err.response?.status) {
+        if ((_a = err.response) === null || _a === void 0 ? void 0 : _a.status) {
             return err.response.status;
         }
         const matches = err.message.match(/.*(\d+)$/);

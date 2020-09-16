@@ -103,7 +103,8 @@ export class ServiceBase {
             : QueryBuilder.getGitLab(params);
     }
     _convertToGitHubIssue(value) {
-        value.id = value.number ?? value.iid;
+        var _a;
+        value.id = (_a = value.number) !== null && _a !== void 0 ? _a : value.iid;
         if (this.config.name === 'GitLab') {
             value.body = value.description;
             value.user = value.author;
