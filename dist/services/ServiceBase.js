@@ -8,7 +8,14 @@ export class ServiceBase {
     init(value) {
         this.issue = {};
         this.labels = [];
+        Rest.init(value.rest);
+        Rest.on(Rest.kOnUnauthorized, this.onUnauthorized);
         this.config = value;
+    }
+    onUnauthorized(handler) {
+        if (handler) {
+            handler();
+        }
     }
     signIn(clientId, directUri) {
         const url = this.config.name === 'GitHub'
