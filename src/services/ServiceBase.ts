@@ -19,7 +19,15 @@ export class ServiceBase {
     this.labels = [];
 
     // Assign new config
+    Rest.init(value.rest);
+    Rest.on(Rest.kOnUnauthorized, this.onUnauthorized);
     this.config = value;
+  }
+
+  public onUnauthorized(handler: () => void) {
+    if (handler) {
+      handler();
+    }
   }
 
   ///////////////////////////////////////////////////////////////////
