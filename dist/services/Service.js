@@ -12,6 +12,9 @@ class Service extends ServiceBase {
     async findTag() {
         return this.findOneIssuesByLabel(this.config.labels.tags);
     }
+    async findToc() {
+        return this.findOneIssuesByLabel(this.config.labels.toc);
+    }
     async findPosts(params) {
         return this.findIssuesByLabel([this.config.labels.post], params);
     }

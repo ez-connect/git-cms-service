@@ -16,13 +16,28 @@ export interface ServiceConfig {
 
   // Specific label for data type, can change to match your labels
   labels: {
+    //
+    // General tags
+    //
     nav: string;
     header: string;
     footer: string;
-    // Describe all available tags
-    tags: string;
+    // Posts collection
     post: string;
-    pin: string;
+
+    //
+    // Blog
+    //
+    // Describe all available tags
+    tags?: string;
+    // Posts are pinned
+    pin?: string;
+
+    //
+    // Documentation
+    //
+    // Table of contents
+    toc?: string;
   };
 }
 

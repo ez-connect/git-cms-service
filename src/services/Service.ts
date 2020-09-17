@@ -19,6 +19,10 @@ class Service extends ServiceBase {
     return this.findOneIssuesByLabel(this.config.labels.tags);
   }
 
+  public async findToc(): Promise<Issue> {
+    return this.findOneIssuesByLabel(this.config.labels.toc);
+  }
+
   public async findPosts(params?: QueryParams): Promise<Issue[]> {
     return this.findIssuesByLabel([this.config.labels.post], params);
   }

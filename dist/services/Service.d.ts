@@ -6,6 +6,7 @@ declare class Service extends ServiceBase {
     findHeader(): Promise<Issue>;
     findFooter(): Promise<Issue>;
     findTag(): Promise<Issue>;
+    findToc(): Promise<Issue>;
     findPosts(params?: QueryParams): Promise<Issue[]>;
     findPostsByLabel(value: string, params?: QueryParams): Promise<Issue[]>;
     findPinPosts(params?: QueryParams): Promise<Issue[]>;

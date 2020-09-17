@@ -16,9 +16,10 @@ export interface ServiceConfig {
         nav: string;
         header: string;
         footer: string;
-        tags: string;
         post: string;
-        pin: string;
+        tags?: string;
+        pin?: string;
+        toc?: string;
     };
 }
 export interface Config {
