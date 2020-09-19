@@ -1,16 +1,15 @@
 import slugify from 'slugify';
 
-import { Issue, Label } from '../models';
 import { Base64 } from './Base64';
 
 class Routing {
   /**
    * Returns slug from a label, includes encoded name
-   * @param value A label
+   * @param value The name of label
    */
-  public getTagSlug(value: Label): string {
-    const slug = slugify(value.name, { lower: true });
-    const id = Base64.encode(value.name);
+  public getTagSlug(value: string): string {
+    const slug = slugify(value, { lower: true });
+    const id = Base64.encode(value);
     return `${slug}-${id}`;
   }
 
@@ -29,11 +28,9 @@ class Routing {
 
   /**
    * Returns slug from an issue, includes id
-   * @param value An issue
    */
-  public getPostSlug(value: Issue): string {
-    const slug = slugify(value.title, { lower: true });
-    const id = value.id;
+  public getPostSlug(title: string, id: number): string {
+    const slug = slugify(title, { lower: true });
     return `${slug}-${id}`;
   }
 
