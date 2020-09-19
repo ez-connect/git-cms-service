@@ -2,8 +2,8 @@ import slugify from 'slugify';
 import { Base64 } from './Base64';
 class Routing {
     getTagSlug(value) {
-        const slug = slugify(value.name, { lower: true });
-        const id = Base64.encode(value.name);
+        const slug = slugify(value, { lower: true });
+        const id = Base64.encode(value);
         return `${slug}-${id}`;
     }
     getTagNameFromPath(value) {
@@ -13,9 +13,8 @@ class Routing {
         }
         return '';
     }
-    getPostSlug(value) {
-        const slug = slugify(value.title, { lower: true });
-        const id = value.id;
+    getPostSlug(title, id) {
+        const slug = slugify(title, { lower: true });
         return `${slug}-${id}`;
     }
     getPostIdFromPath(value) {

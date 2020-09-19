@@ -1,8 +1,7 @@
-import { Issue, Label } from '../models';
 declare class Routing {
-    getTagSlug(value: Label): string;
+    getTagSlug(value: string): string;
     getTagNameFromPath(value: string): string;
-    getPostSlug(value: Issue): string;
+    getPostSlug(title: string, id: number): string;
     getPostIdFromPath(value: string): number;
 }
 declare const singleton: Routing;
