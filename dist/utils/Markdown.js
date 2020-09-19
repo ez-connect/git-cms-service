@@ -14,14 +14,14 @@ class Markdown {
         }
         return matches[1];
     }
-    getDescription(body) {
-        if (!body) {
+    getDescription(md) {
+        if (!md) {
             return '';
         }
-        return body.replaceAll(/!?\[.*\]\((http.*\/.*)\)/g, '');
+        return md.replaceAll(/!?\[.*\]\((http.*\/.*)\)/g, '');
     }
-    getReadingTime(body) {
-        return readingTime(body).text;
+    getReadingTime(md) {
+        return readingTime(md).text;
     }
 }
 const singleton = new Markdown();

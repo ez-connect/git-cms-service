@@ -1,11 +1,11 @@
 import { Buffer } from 'buffer';
 class Base64 {
     encode(value) {
-        const buff = new Buffer(value);
+        const buff = Buffer.from(value, 'utf8');
         return buff.toString('base64');
     }
     decode(value) {
-        const buff = new Buffer(value, 'base64');
+        const buff = Buffer.from(value, 'base64');
         return buff.toString('utf-8');
     }
 }

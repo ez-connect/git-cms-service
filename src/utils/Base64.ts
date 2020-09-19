@@ -1,13 +1,19 @@
 import { Buffer } from 'buffer';
 
 class Base64 {
-  public encode(value: string) {
-    const buff = new Buffer(value);
+  /**
+   * Returns base64 encoded of a string
+   */
+  public encode(value: string): string {
+    const buff = Buffer.from(value, 'utf8');
     return buff.toString('base64');
   }
 
-  public decode(value: string) {
-    const buff = new Buffer(value, 'base64');
+  /**
+   * Returns a string from base64 encoded
+   */
+  public decode(value: string): string {
+    const buff = Buffer.from(value, 'base64');
     return buff.toString('utf-8');
   }
 }
