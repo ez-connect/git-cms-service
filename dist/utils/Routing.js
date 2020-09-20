@@ -8,7 +8,7 @@ class Routing {
     }
     getTagNameFromPath(value) {
         const matches = value.match(/.*-(.*)$/);
-        if (matches.length > 0) {
+        if (matches && matches.length > 0) {
             return Base64.decode(matches[1]);
         }
         return '';
@@ -19,7 +19,7 @@ class Routing {
     }
     getPostIdFromPath(value) {
         const matches = value.match(/.*-(\d+)$/);
-        if (matches.length > 0) {
+        if (matches && matches.length > 0) {
             return Number.parseInt(matches[1], 10);
         }
         return 0;
