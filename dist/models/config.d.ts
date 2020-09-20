@@ -21,11 +21,11 @@ export interface ServiceConfig {
         pin?: string;
         toc?: string;
     };
-    trackingCode?: string;
 }
 export interface Config {
     service: ServiceConfig;
     router: {
         [name: string]: string;
     };
+    trackingCode?: string;
 }
