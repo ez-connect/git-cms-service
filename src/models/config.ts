@@ -39,6 +39,9 @@ export interface ServiceConfig {
     // Table of contents
     toc?: string;
   };
+
+  // Google analytics
+  trackingCode?: string;
 }
 
 export interface Config {
