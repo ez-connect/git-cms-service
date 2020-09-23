@@ -12,9 +12,10 @@ export class ServiceBase {
         Rest.on(Rest.kOnUnauthorized, this.onUnauthorized);
         this.config = value;
     }
-    onUnauthorized(handler) {
-        if (handler) {
-            handler();
+    onUnauthorized() {
+        const { authorization } = this.config;
+        if (authorization) {
+            this.signIn(authorization.clientId, authorization.directUri);
         }
     }
     signIn(clientId, directUri) {

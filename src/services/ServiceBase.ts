@@ -24,9 +24,10 @@ export class ServiceBase {
     this.config = value;
   }
 
-  public onUnauthorized(handler: () => void) {
-    if (handler) {
-      handler();
+  public onUnauthorized() {
+    const { authorization } = this.config;
+    if (authorization) {
+      this.signIn(authorization.clientId, authorization.directUri)
     }
   }
 

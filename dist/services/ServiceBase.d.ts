@@ -7,7 +7,7 @@ export declare class ServiceBase {
     };
     protected labels: Label[];
     init(value: ServiceConfig): void;
-    onUnauthorized(handler: () => void): void;
+    onUnauthorized(): void;
     signIn(clientId: string, directUri: string): void;
     getAccessToken(code: string): Promise<string>;
     findOneUser(username: string): Promise<User>;
