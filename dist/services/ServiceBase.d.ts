@@ -7,8 +7,7 @@ export declare class ServiceBase {
     };
     protected labels: Label[];
     init(value: ServiceConfig): void;
-    onUnauthorized(): void;
-    signIn(clientId: string, directUri: string): void;
+    getSignInURL(): string;
     getAccessToken(code: string): Promise<string>;
     findOneUser(username: string): Promise<User>;
     protected findLabels(): Promise<Label[]>;

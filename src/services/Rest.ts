@@ -1,13 +1,14 @@
 import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { EventEmitter } from 'events';
 
 import { Logger } from '../utils';
 
-class Rest extends EventEmitter {
-  public kOnUnauthorized = 'onUnauthorized';
+export type ErrorHandler = (err: AxiosError) => void;
 
+class Rest {
   private _axios: AxiosInstance;
   private _config: AxiosRequestConfig;
+
+  private _errorHandler: ErrorHandler;
 
   public init(config: AxiosRequestConfig) {
     this._config = config;
@@ -28,6 +29,10 @@ class Rest extends EventEmitter {
     };
   }
 
+  public onError(handler?: ErrorHandler) {
+    this._errorHandler = handler;
+  }
+
   ///////////////////////////////////////////////////////////////////
 
   public async get<T>(url: string, cfg?: AxiosRequestConfig): Promise<T> {
@@ -36,10 +41,9 @@ class Rest extends EventEmitter {
       const res = await this._axios.get<T>(url, cfg);
       return res.data;
     } catch (err) {
-      if (this.isUnauthorized(err)) {
-        this.emit(this.kOnUnauthorized);
+      if (this._errorHandler) {
+        this._errorHandler(err);
       }
-
       throw err;
     }
   }
@@ -51,33 +55,6 @@ class Rest extends EventEmitter {
   ): Promise<T> {
     const res = await this._axios.post<T>(url, data, config);
     return res.data;
-  }
-
-  ///////////////////////////////////////////////////////////////////
-
-  public getCode(err: AxiosError): number {
-    if (err.code) {
-      return Number.parseInt(err.code, 10);
-    }
-
-    if (err.response?.status) {
-      return err.response.status;
-    }
-
-    const matches = err.message.match(/.*(\d+)$/);
-    if (matches && matches.length > 0) {
-      return Number.parseInt(matches[1], 10);
-    }
-
-    return 200;
-  }
-
-  public isUnauthorized(err: AxiosError) {
-    if (this.getCode(err) === 401) {
-      return true;
-    }
-
-    return false;
   }
 }
 

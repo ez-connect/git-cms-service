@@ -9,20 +9,14 @@ export class ServiceBase {
         this.issue = {};
         this.labels = [];
         Rest.init(value.rest);
-        Rest.on(Rest.kOnUnauthorized, this.onUnauthorized);
         this.config = value;
     }
-    onUnauthorized() {
-        const { authorization } = this.config;
-        if (authorization) {
-            this.signIn(authorization.clientId, authorization.directUri);
-        }
-    }
-    signIn(clientId, directUri) {
+    getSignInURL() {
+        const { clientId, directUri } = this.config.authorization;
         const url = this.config.name === 'GitHub'
             ? `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${directUri}`
             : `https://gitlab.com/oauth/authorize?client_id=${clientId}&redirect_uri=${directUri}&response_type=code&scope=profile`;
-        window.open(url);
+        return url;
     }
     async getAccessToken(code) {
         const { clientId, clientSecret, directUri } = this.config.authorization;
