@@ -26,7 +26,7 @@ export class ServiceBase {
   ///////////////////////////////////////////////////////////////////
 
   public getSignInURL(): string {
-    const {clientId, directUri}  = this.config.authorization;
+    const { clientId, directUri } = this.config.authorization;
     const url =
       this.config.name === 'GitHub'
         ? `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${directUri}`
@@ -45,18 +45,29 @@ export class ServiceBase {
       redirect_uri: directUri,
     };
 
+    const url =
+      this.config.name === 'GitHub'
+        ? 'https://github.com/login/oauth/access_token'
+        : 'https://gitlab.com/oauth/token';
+
     try {
-      const res = await Rest.post<any>(
-        'https://gitlab.com/oauth/token',
-        undefined,
-        { params },
-      );
+      const res = await Rest.post<any>(url, undefined, { params });
       return res.access_token;
     } catch (err) {
       localStorage.setItem('error', JSON.stringify(err));
       throw err;
     }
   }
+
+  public setAuthorization(token: string) {
+    const authorization =
+      this.config.name === 'GitHub'
+        ? `token ${token}`
+        : `Private-Token ${token}`;
+    Rest.setAuthorization(authorization);
+  }
+
+  ///////////////////////////////////////////////////////////////////
 
   public async findOneUser(username: string): Promise<User> {
     return await Rest.get<User>(`https://api.github.com/users/${username}`);

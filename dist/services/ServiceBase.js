@@ -27,14 +27,23 @@ export class ServiceBase {
             grant_type: 'authorization_code',
             redirect_uri: directUri,
         };
+        const url = this.config.name === 'GitHub'
+            ? 'https://github.com/login/oauth/access_token'
+            : 'https://gitlab.com/oauth/token';
         try {
-            const res = await Rest.post('https://gitlab.com/oauth/token', undefined, { params });
+            const res = await Rest.post(url, undefined, { params });
             return res.access_token;
         }
         catch (err) {
             localStorage.setItem('error', JSON.stringify(err));
             throw err;
         }
+    }
+    setAuthorization(token) {
+        const authorization = this.config.name === 'GitHub'
+            ? `token ${token}`
+            : `Private-Token ${token}`;
+        Rest.setAuthorization(authorization);
     }
     async findOneUser(username) {
         return await Rest.get(`https://api.github.com/users/${username}`);

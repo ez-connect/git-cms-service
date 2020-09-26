@@ -9,6 +9,7 @@ export declare class ServiceBase {
     init(value: ServiceConfig): void;
     getSignInURL(): string;
     getAccessToken(code: string): Promise<string>;
+    setAuthorization(token: string): void;
     findOneUser(username: string): Promise<User>;
     protected findLabels(): Promise<Label[]>;
     protected findOneLabel(value: string): Promise<Label>;

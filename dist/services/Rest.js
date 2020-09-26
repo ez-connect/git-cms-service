@@ -9,7 +9,7 @@ class Rest {
         const { headers } = this._config;
         this._axios.defaults.headers = {
             ...headers,
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
         };
     }
     onError(handler) {
