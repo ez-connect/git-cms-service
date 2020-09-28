@@ -1,8 +1,13 @@
 import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
+import { cacheAdapterEnhancer } from 'axios-extensions';
+import LRUCache from 'lru-cache';
 
 import { Logger } from '../utils';
 
 export type ErrorHandler = (err: AxiosError) => void;
+
+const kCacheMaxAge = 1000 * 60 * 60 * 24 * 7; // 1 week
+const kCacheMax = 1000;
 
 class Rest {
   private _axios: AxiosInstance;
@@ -12,7 +17,12 @@ class Rest {
 
   public init(config: AxiosRequestConfig) {
     this._config = config;
-    this._axios = Axios.create(config);
+    this._axios = Axios.create({
+      ...config,
+      adapter: cacheAdapterEnhancer(Axios.defaults.adapter, {
+        defaultCache: new LRUCache({ maxAge: kCacheMaxAge, max: kCacheMax }),
+      }),
+    });
   }
 
   ///////////////////////////////////////////////////////////////////
