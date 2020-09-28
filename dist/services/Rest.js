@@ -1,9 +1,18 @@
 import Axios from 'axios';
+import { cacheAdapterEnhancer } from 'axios-extensions';
+import LRUCache from 'lru-cache';
 import { Logger } from '../utils';
+const kCacheMaxAge = 1000 * 60 * 60 * 24 * 7;
+const kCacheMax = 1000;
 class Rest {
     init(config) {
         this._config = config;
-        this._axios = Axios.create(config);
+        this._axios = Axios.create({
+            ...config,
+            adapter: cacheAdapterEnhancer(Axios.defaults.adapter, {
+                defaultCache: new LRUCache({ maxAge: kCacheMaxAge, max: kCacheMax }),
+            }),
+        });
     }
     setAuthorization(token) {
         const { headers } = this._config;
