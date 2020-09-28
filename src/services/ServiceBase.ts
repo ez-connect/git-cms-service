@@ -25,8 +25,12 @@ export class ServiceBase {
 
   ///////////////////////////////////////////////////////////////////
 
+  /**
+   * https://docs.github.com/en/free-pro-team@latest/developers/apps/authorizing-oauth-apps
+   */
   public getSignInURL(): string {
     const { clientId, directUri } = this.config.authorization;
+    // const state = Math.random().toString(36).substring(8); // random string
     const url =
       this.config.name === 'GitHub'
         ? `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${directUri}`
